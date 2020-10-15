@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{FCEAF905-EDF1-AFDA-E411-8A1133D815BA}</ProjectGuid>
+    <ProjectGuid>{B132A00E-4DF0-AE1F-3F8B-B6516C69F673}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Unity.XR.Oculus</AssemblyName>
@@ -626,7 +626,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Unity.XR.Management.csproj">
-      <Project>{3780D811-0428-C610-5693-2B2FFE0EAAEE}</Project>
+      <Project>{6A4A7CAD-B637-B48C-ED67-7E5945E809CB}</Project>
       <Name>Unity.XR.Management</Name>
     </ProjectReference>
   </ItemGroup>

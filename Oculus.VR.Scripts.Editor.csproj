@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{3A2F35F6-743F-124F-3CC7-9E5F3FBDE6FF}</ProjectGuid>
+    <ProjectGuid>{9DA614A7-5989-5D3A-7889-2BE0ED097C1C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Oculus.VR.Scripts.Editor</AssemblyName>
@@ -623,19 +623,19 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Oculus.VR.csproj">
-      <Project>{A67CCEB1-5863-10C6-6813-6773E14DB92B}</Project>
+      <Project>{2BA16A5D-F4B7-143D-B605-00EF795FC066}</Project>
       <Name>Oculus.VR</Name>
     </ProjectReference>
     <ProjectReference Include="Oculus.VR.Editor.csproj">
-      <Project>{0064FDFE-8E6C-1C06-82BC-3210C898F78B}</Project>
+      <Project>{A2E4B5F7-4E45-E942-3DB8-EDFFBAA3F411}</Project>
       <Name>Oculus.VR.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.TestRunner.csproj">
-      <Project>{F61914A5-D60E-3185-5265-396E656301EB}</Project>
+      <Project>{40C4DC32-9A70-E211-C2B3-4CB4F14A0A4C}</Project>
       <Name>UnityEditor.TestRunner</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEngine.TestRunner.csproj">
-      <Project>{C6C61E08-1C22-CEEC-F3FF-1B7A785984BC}</Project>
+      <Project>{CF8990F2-684B-3143-D914-2FF2585AD0EB}</Project>
       <Name>UnityEngine.TestRunner</Name>
     </ProjectReference>
   </ItemGroup>

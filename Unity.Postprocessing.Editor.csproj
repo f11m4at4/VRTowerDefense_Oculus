@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{8B55A4CA-F258-E3A0-F4C1-6B271DC114DF}</ProjectGuid>
+    <ProjectGuid>{1105D9BB-7382-1DD9-69C9-861B359AED7E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Unity.Postprocessing.Editor</AssemblyName>
@@ -651,15 +651,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Unity.Postprocessing.Runtime.csproj">
-      <Project>{204E9104-116D-94DA-40D9-765FDFC74A93}</Project>
+      <Project>{9E3EF1F1-C4F6-AE8F-2C66-14DC9D694FC8}</Project>
       <Name>Unity.Postprocessing.Runtime</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEditor.TestRunner.csproj">
-      <Project>{F61914A5-D60E-3185-5265-396E656301EB}</Project>
+      <Project>{40C4DC32-9A70-E211-C2B3-4CB4F14A0A4C}</Project>
       <Name>UnityEditor.TestRunner</Name>
     </ProjectReference>
     <ProjectReference Include="UnityEngine.TestRunner.csproj">
-      <Project>{C6C61E08-1C22-CEEC-F3FF-1B7A785984BC}</Project>
+      <Project>{CF8990F2-684B-3143-D914-2FF2585AD0EB}</Project>
       <Name>UnityEngine.TestRunner</Name>
     </ProjectReference>
   </ItemGroup>

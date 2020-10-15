@@ -27,13 +27,14 @@ public class PlayerMove : MonoBehaviour
         cc = GetComponent<CharacterController>();
     }
 
+    bool bRecentering = false;
     
     void Update()
     {
         // 사용자의 입력에 따라 앞뒤좌우로 이동하고 싶다.
         // 1. 사용자의 입력을 받는다.
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
+        float h = ARAVRInput.GetAxis("Horizontal");
+        float v = ARAVRInput.GetAxis("Vertical");
         // 2. 방향을 만든다.
         Vector3 dir = new Vector3(h, 0, v);
 
@@ -59,5 +60,21 @@ public class PlayerMove : MonoBehaviour
 
         // 3. 이동한다.
         cc.Move(dir * speed * Time.deltaTime);
+
+        // 오른쪽 터치패드 혹은 썸스틱을 아래로 내리면 Recenter 한다.
+        float recenter = ARAVRInput.GetAxis("Vertical", ARAVRInput.Controller.RTouch);
+        if (recenter != 0)
+        {
+            if (!bRecentering)
+            {
+                ARAVRInput.Recenter(transform, Vector3.forward * Mathf.Sign(recenter));
+            }
+            bRecentering = true;
+        }
+        else
+        {
+            
+            bRecentering = false;
+        }
     }
 }
