@@ -291,7 +291,6 @@ public static class ARAVRInput
 #endif
     }
     // 컨트롤러의 특정 버튼을 눌렀다 떼었을 때 true 를 반환
-
     public static bool GetUp(Button virtualMask, Controller hand = Controller.RTouch)
     {
 #if PC
@@ -342,13 +341,13 @@ public static class ARAVRInput
     }
 
     // 컨트롤러에 진동 호출 하기
-    // waitTime : 지속시간, duration : 반복횟수(시간), frequency : 빈도, amplify : 진폭, hand : 왼쪽 혹은 오른쪽 컨트롤러
+    // duration : 지속시간(반복횟수), frequency : 빈도, amplify : 진폭, hand : 왼쪽 혹은 오른쪽 컨트롤러
     public static void PlayVibration(float duration, float frequency, float amplitude, Controller hand)
     {
 #if Oculus
         if (CoroutineInstance.coroutineInstance == null)
         {
-            GameObject coroutineObj = new GameObject("CoroutineInstance");
+            GameObject coroutineObj = new GameObject("CoroutineObject");
             coroutineObj.AddComponent<CoroutineInstance>();
         }
         CoroutineInstance.coroutineInstance.StartCoroutine(VibrationCoroutine(duration, frequency, amplitude, hand));
@@ -360,8 +359,12 @@ public static class ARAVRInput
 #if Oculus
     static IEnumerator VibrationCoroutine(float duration, float frequency, float amplitude, Controller hand)
     {
-        OVRInput.SetControllerVibration(frequency, amplitude, (OVRInput.Controller)hand);
-        yield return new WaitForSeconds(duration);
+        float currentTime = 0;
+        while (currentTime < duration)
+        {
+            OVRInput.SetControllerVibration(frequency, amplitude, (OVRInput.Controller)hand);
+            yield return null;
+        }
         OVRInput.SetControllerVibration(0, 0, (OVRInput.Controller)hand);
     }
 #endif
@@ -440,6 +443,16 @@ public static class ARAVRInput
             distance = (crosshair.position - ray.origin).magnitude;
             crosshair.localScale = originScale * Mathf.Max(1, distance);
         }
+    }
+
+    // PC 플랫폼인지 여부
+    public static bool IsPC()
+    {
+#if PC
+        return true;
+#else
+        return false;
+#endif
     }
 }
 
