@@ -5,10 +5,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR;
-
 #if Vive
 using Valve.VR;
+using UnityEngine.XR;
 #endif
 
 public static class ARAVRInput
@@ -21,6 +20,7 @@ public static class ARAVRInput
         Fire1,
         Fire2,
         Fire3,
+        Jump,
     }
 #elif Vive
     public enum ButtonTarget
@@ -101,21 +101,14 @@ public static class ARAVRInput
         get
         {
 #if PC
-            /* 같은 결과를 볼 수 있다.
-            Plane plane = new Plane(Vector3.up, 0);
-            Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (plane.Raycast(r, out distance))
-            {
-                return r.GetPoint(distance);
-            }
-            */
             // 마우스의 스크린좌표 얻어오기
             Vector3 pos = Input.mousePosition;
-            // z 값은 카메라의 near 값으로 할당
-            pos.z = Camera.main.nearClipPlane;
+            // z 값은 0.7 미터 로 설정
+            pos.z = 0.7f;
             // 스크린 좌표를 월드좌표로 변환
             pos = Camera.main.ScreenToWorldPoint(pos);
 
+            RHand.position = pos;
             return pos;
 #elif Oculus
             Vector3 pos = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch);
@@ -135,6 +128,7 @@ public static class ARAVRInput
         {
 #if PC
             Vector3 direction = RHandPosition - Camera.main.transform.position;
+            RHand.forward = direction;
             return direction;
 #elif Oculus
             Vector3 direction = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch) * Vector3.forward;
@@ -153,21 +147,14 @@ public static class ARAVRInput
         get
         {
 #if PC
-            /*
-            Plane plane = new Plane(Vector3.up, 0);
-            Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (plane.Raycast(r, out distance))
-            {
-                return r.GetPoint(distance);
-
-            }
-            */
             // 마우스의 스크린좌표 얻어오기
             Vector3 pos = Input.mousePosition;
-            // z 값은 카메라의 near 값으로 할당
-            pos.z = Camera.main.nearClipPlane;
+            // z 값은 0.7 미터 로 설정
+            pos.z = 0.7f;
             // 스크린 좌표를 월드좌표로 변환
             pos = Camera.main.ScreenToWorldPoint(pos);
+
+            LHand.position = pos;
             return pos;
 #elif Oculus
             Vector3 pos = OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch);
@@ -187,6 +174,7 @@ public static class ARAVRInput
         {
 #if PC
             Vector3 direction = LHandPosition - Camera.main.transform.position;
+            LHand.forward = direction;
             return direction;
 #elif Oculus
             Vector3 direction = OVRInput.GetLocalControllerRotation(OVRInput.Controller.LTouch) * Vector3.forward;
@@ -218,10 +206,6 @@ public static class ARAVRInput
                 GameObject handObj = new GameObject("LHand");
                 // 만들어진 객체의 트렌스폼을 lHand 에 할당
                 lHand = handObj.transform;
-                // 컨트롤러의 위치값으로 lHand 객체의 위치를 할당
-                lHand.position = LHandPosition;
-                // 컨트롤러가 향하는 방향을 LHandDirection 으로 할당
-                lHand.forward = LHandDirection;
                 // 컨트롤러를 카메라의 자식 객체로 등록
                 lHand.parent = Camera.main.transform;
 #elif Oculus
@@ -248,10 +232,6 @@ public static class ARAVRInput
                 GameObject handObj = new GameObject("RHand");
                 // 만들어진 객체의 트렌스폼을 rHand 에 할당
                 rHand = handObj.transform;
-                // 컨트롤러의 위치값으로 rHand 객체의 위치를 할당
-                rHand.position = RHandPosition;
-                // 컨트롤러가 향하는 방향을 RHandPosition 으로 할당
-                rHand.forward = RHandDirection;
                 // 컨트롤러를 카메라의 자식 객체로 등록
                 rHand.parent = Camera.main.transform;
 #elif Oculus
@@ -274,7 +254,8 @@ public static class ARAVRInput
         return OVRInput.Get((OVRInput.Button)virtualMask, (OVRInput.Controller)hand);
 #elif Vive
         //return SteamVR_Actions._default.Teleport.state;
-        return SteamVR_Input.GetState(((ButtonTarget)virtualMask).ToString(), (SteamVR_Input_Sources)(hand));
+        string button = ((ButtonTarget)virtualMask).ToString();
+        return SteamVR_Input.GetState(button, (SteamVR_Input_Sources)(hand));
 #endif
     }
 
@@ -287,7 +268,8 @@ public static class ARAVRInput
         return OVRInput.GetDown((OVRInput.Button)virtualMask, (OVRInput.Controller)hand);
 #elif Vive
         //return SteamVR_Actions._default.Teleport.stateDown;
-        return SteamVR_Input.GetStateDown(((ButtonTarget)virtualMask).ToString(), (SteamVR_Input_Sources)(hand));
+        string button = ((ButtonTarget)virtualMask).ToString();
+        return SteamVR_Input.GetStateDown(button, (SteamVR_Input_Sources)(hand));
 #endif
     }
     // 컨트롤러의 특정 버튼을 눌렀다 떼었을 때 true 를 반환
@@ -299,7 +281,8 @@ public static class ARAVRInput
         return OVRInput.GetUp((OVRInput.Button)virtualMask, (OVRInput.Controller)hand);
 #elif Vive
         //return SteamVR_Actions._default.Teleport.stateUp;
-        return SteamVR_Input.GetStateUp(((ButtonTarget)virtualMask).ToString(), (SteamVR_Input_Sources)(hand));
+        string button = ((ButtonTarget)virtualMask).ToString();
+        return SteamVR_Input.GetStateUp(button, (SteamVR_Input_Sources)(hand));
 #endif
     }
 
@@ -362,6 +345,7 @@ public static class ARAVRInput
         float currentTime = 0;
         while (currentTime < duration)
         {
+            currentTime += Time.deltaTime;
             OVRInput.SetControllerVibration(frequency, amplitude, (OVRInput.Controller)hand);
             yield return null;
         }
